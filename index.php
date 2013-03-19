@@ -8,9 +8,6 @@ get_header(); ?>
 	<div class="col-full">
 		<div id="primary">
 			<div id="content">
-				<header class="entry-header">
-					<h1 class="entry-title"><?php the_title(); ?></h1>
-				</header><!-- .entry-header -->
 				<div class="entry-content">
 					<?php get_template_part( 'loop', 'index' ); ?>
 				</div><!-- .entry-content -->
