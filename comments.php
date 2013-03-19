@@ -34,33 +34,33 @@ function eyespeak_comment( $comment, $args, $depth ) {
 		case '' :
 	?>
 	<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>">
-		<article id="comment-<?php comment_ID(); ?>" class="comment" role="article">
-			<footer>
+		<article id="comment-<?php comment_ID(); ?>" class="comment clearfix" role="article">
+			<div class="gravatar">
+				<?php echo get_avatar( $comment, 80 ); ?>
+			</div><!-- .gravatar -->
+			<div class="post-extra-content">
 				<div class="comment-author vcard">
-					<?php echo get_avatar( $comment, 40 ); ?>
-					<?php printf( __( '%s <span class="says">says:</span>', 'themename' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?>
+					<?php printf( __( '%s', 'eyespeak' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?>
 				</div><!-- .comment-author .vcard -->
 				<?php if ( $comment->comment_approved == '0' ) : ?>
-					<em><?php _e( 'Your comment is awaiting moderation.', 'themename' ); ?></em>
+					<em><?php _e( 'Your comment is awaiting moderation.', 'eyespeak' ); ?></em>
 					<br />
 				<?php endif; ?>
-
-				<div class="comment-meta commentmetadata">
+	
+				<div class="post-extra-meta commentmetadata">
 					<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><time pubdate datetime="<?php comment_time( 'c' ); ?>">
 					<?php
 						/* translators: 1: date, 2: time */
-						printf( __( '%1$s at %2$s', 'themename' ), get_comment_date(),  get_comment_time() ); ?>
+						printf( __( '%1$s at %2$s', 'eyespeak' ), get_comment_date(),  get_comment_time() ); ?>
 					</time></a>
-					<?php edit_comment_link( __( '(Edit)', 'themename' ), ' ' );
+					<?php edit_comment_link( __( '(Edit)', 'eyespeak' ), ' ' );
 					?>
-				</div><!-- .comment-meta .commentmetadata -->
-			</footer>
-
-			<div class="comment-body"><?php comment_text(); ?></div>
-
-			<div class="reply">
-				<?php comment_reply_link( array_merge( $args, array( 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
-			</div><!-- .reply -->
+				</div><!-- .post-extra-meta .commentmetadata -->
+				<div class="comment-body"><?php comment_text(); ?></div>
+				<div class="reply">
+					<?php comment_reply_link( array_merge( $args, array( 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
+				</div><!-- .reply -->
+			</div><!-- .comment-content -->
 		</article><!-- #comment-##  -->
 
 	<?php
@@ -69,7 +69,7 @@ function eyespeak_comment( $comment, $args, $depth ) {
 		case 'trackback' :
 	?>
 	<li class="post pingback">
-		<p><?php _e( 'Pingback:', 'themename' ); ?> <?php comment_author_link(); ?><?php edit_comment_link( __('(Edit)', 'themename'), ' ' ); ?></p>
+		<p><?php _e( 'Pingback:', 'eyespeak' ); ?> <?php comment_author_link(); ?><?php edit_comment_link( __('(Edit)', 'eyespeak'), ' ' ); ?></p>
 	<?php
 			break;
 	endswitch;
@@ -80,7 +80,7 @@ endif; // ends check for eyespeak_comment()
 
 	<div id="comments">
 	<?php if ( post_password_required() ) : ?>
-		<div class="nopassword"><?php _e( 'This post is password protected. Enter the password to view any comments.', 'themename' ); ?></div>
+		<div class="nopassword"><?php _e( 'This post is password protected. Enter the password to view any comments.', 'eyespeak' ); ?></div>
 	</div><!-- .comments -->
 	<?php return;
 		endif;
@@ -91,15 +91,15 @@ endif; // ends check for eyespeak_comment()
 	<?php if ( have_comments() ) : ?>
 		<h2 id="comments-title">
 			<?php
-			    printf( _n( 'One Response to %2$s', '%1$s Responses to %2$s', get_comments_number(), 'themename' ),
+			    printf( _n( 'One Response to %2$s', '%1$s Responses to %2$s', get_comments_number(), 'eyespeak' ),
 			        number_format_i18n( get_comments_number() ), '<em>' . get_the_title() . '</em>' );
 			?>
 		</h2>
 
 		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // are there comments to navigate through ?>
 		<nav id="comment-nav-above" role="article">
-			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'themename' ) ); ?></div>
-			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'themename' ) ); ?></div>
+			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'eyespeak' ) ); ?></div>
+			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'eyespeak' ) ); ?></div>
 		</nav>
 		<?php endif; // check for comment navigation ?>
 
@@ -109,9 +109,9 @@ endif; // ends check for eyespeak_comment()
 
 		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // are there comments to navigate through ?>
 		<nav id="comment-nav-below" role="article">
-			<h1 class="section-heading"><?php _e( 'Comment navigation', 'themename' ); ?></h1>
-			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'themename' ) ); ?></div>
-			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'themename' ) ); ?></div>
+			<h1 class="section-heading"><?php _e( 'Comment navigation', 'eyespeak' ); ?></h1>
+			<div class="nav-previous"><?php previous_comments_link( __( '&larr; Older Comments', 'eyespeak' ) ); ?></div>
+			<div class="nav-next"><?php next_comments_link( __( 'Newer Comments &rarr;', 'eyespeak' ) ); ?></div>
 		</nav>
 		<?php endif; // check for comment navigation ?>
 
@@ -127,7 +127,7 @@ endif; // ends check for eyespeak_comment()
 			 */
 			if ( ! comments_open() && ! is_page() ) :
 			?>
-			<p class="nocomments"><?php _e( 'Comments are closed.', 'themename' ); ?></p>
+			<p class="nocomments"><?php _e( 'Comments are closed.', 'eyespeak' ); ?></p>
 			<?php endif; // end ! comments_open() && ! is_page() ?>
 
 

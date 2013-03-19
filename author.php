@@ -11,9 +11,10 @@ get_header(); ?>
 				<?php the_post(); ?>
 				<header class="entry-header">
 					<h1 class="entry-title">
-						<?php printf( __( 'Author Archives: <span class="vcard">%s</span>', 'themename' ), "<a class='url fn n' href='" . get_author_posts_url( get_the_author_meta( 'ID' ) ) . "' title='" . esc_attr( get_the_author() ) . "' rel='me'>" . get_the_author() . "</a>" ); ?>
+						<?php printf( __( 'Author Archives: <span class="vcard">%s</span>', 'themename' ), "" . get_the_author() . "" ); ?>
 					</h1>
 				</header><!-- .entry-header -->
+				<?php eyespeak_author_box(); ?>
 				<div class="entry-content">
 					<?php rewind_posts(); ?>	
 					<?php get_template_part( 'loop', 'author' ); ?>

@@ -42,12 +42,34 @@ License: GNU General Public License
 	
 	// if you want to use a webfont from gooogle or something
 	@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700);
+
+	@font-face {
+	    font-family: 'entypo';
+	    src: url('fonts/entypo.eot');
+	    src: url('fonts/entypo.eot?#iefix') format('embedded-opentype'),
+	         url('fonts/entypo.woff') format('woff'),
+	         url('fonts/entypo.ttf') format('truetype'),
+	         url('fonts/entypo.svg#gl') format('svg');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+	@font-face {
+	    font-family: 'entypo-social';
+	    src: url('fonts/entypo-social.eot');
+	    src: url('fonts/entypo-social.eot?#iefix') format('embedded-opentype'),
+	         url('fonts/entypo-social.woff') format('woff'),
+	         url('fonts/entypo-social.ttf') format('truetype'),
+	         url('fonts/entypo-social.svg#gb') format('svg');
+	    font-weight: normal;
+	    font-style: normal;
+	}
 	
 	// Body Font family
-	@body-font:		sans-serif;
+	@body-font:			sans-serif;
 	
 	// Heading font family
-	@heading-font:	'Open Sans', sans-serif;
+	@heading-font:		'Open Sans', sans-serif;
+	@heading-weight:	300;
 	
 	// Body text size
 	@body-text-size:	1.7em;
@@ -60,7 +82,7 @@ License: GNU General Public License
 	@site-name-color:	@grey;
 	
 	// Site heading color
-	@headinng-color:	#404040;
+	@heading-color:		#404040;
 	
 	// Site Text color
 	@text-color:		#787878;	
@@ -126,6 +148,11 @@ License: GNU General Public License
 		-moz-box-shadow:    @string;
 		box-shadow:         @string;
 	}
+	.box-shadow-inset (@string: inset 0px 0px 1px 1px #cccccc) {
+		-webkit-box-shadow: @string;
+		-moz-box-shadow:    @string;
+		box-shadow:         @string;
+	}
 
 @import "reset";
 
@@ -136,7 +163,7 @@ License: GNU General Public License
 	-moz-box-sizing: 	border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: 		border-box;
-	word-break: break-all;
+	word-break: 		normal;
 }
 
 body,
@@ -149,6 +176,7 @@ select {
 	font-family: @body-font;
 	font-size: (@body-text-size);
 	line-height: 1.5em;
+	color: @text-color;
 }
 
 
@@ -166,6 +194,7 @@ h6 {
 	clear: both;
 	font-family: @heading-font;
 	line-height: 1.2em;
+	font-weight: @heading-weight;
 }
 
 h1 {
@@ -268,7 +297,34 @@ a:active {
 	margin: 0 auto;
 }
 
+.entypo {
+	font-family: 'entypo';
+	display: block;
+	float: left;
+}
+.entypo-social {
+	font-family: 'entypo-social';
+	display: block;
+	float: left;
+}
 
+/* Forms */
+form {
+	width: 100%;
+	
+	input[type=text], 
+	input[type=email], 
+	textarea {
+		width: 100%;
+		font-size: 1em;
+		line-height: 1.5em;
+		padding: 0.5em 1em;
+		border: none;
+		background: @white;
+		.box-shadow-inset;
+		margin-bottom: @margin;
+	}
+}
 /* Overall for slidenav */
 body,
 html {
@@ -286,7 +342,7 @@ html {
 	background: #333;
 	height: 100%;
 	overflow-y: scroll;
-	padding-top: 6em;
+	padding-top: 4em;
 	
 		ul {
 			list-style: none;
@@ -303,11 +359,34 @@ html {
 					color: @off-white;
 					display: block;
 					padding: @padding;
+					border-left: 3px solid @off-white;
+
+					&:hover {
+						background: @dark;
+					}
 				}
-				&:hover {
-					background: @dark;
-				}
-			}
+			} // ul li
+			
+			ul {
+				
+				li {
+					border-left: 3px dotted @off-white;
+					a {
+						padding-left: @padding * 2;
+						border-left: none;
+					}
+					
+					ul {
+						li {
+							border-left: 3px solid @off-white;
+							a {
+								padding-left: @padding *3;
+								border-left: none;
+							}
+						}
+					} // ul ul ul
+				} // ul ul li
+			} // ul ul
 		} // ul
 	
 }// #mobile-nav
@@ -342,12 +421,12 @@ body.active #page {
 	.box-shadow;
 
 	#menu-button {
-		position: absolute;
-		top: 1em;
+		float: left;
+		top: 0;
 		left: 5%;
-		width: 2em;
-		height: 2em;
-		background: transparent;
+		font-size: 6em;
+		line-height: 0.67em;
+		cursor: pointer;
 		
 		img {
 			width: 2em;
@@ -398,18 +477,18 @@ article {
 	.rounded-corners;
 	
 	.entry-title {
-		color: @headinng-color;
+		color: @heading-color;
 		
 		a {
 			text-decoration: none;
-			color: @headinng-color;
+			color: @heading-color;
 			
 			&:hover {
 				color: @secondary;
 			}
 		}// a
 		
-	}// title
+	}// entry-title
 	
 	.entry-meta {
 		margin-bottom:  @margin;
@@ -428,7 +507,7 @@ article {
 			}
 		}
 		
-	}
+	}//entry-meta
 	
 	.entry-content {
 
@@ -442,12 +521,12 @@ article {
 		}
 		
 		img {
-			width: 100%;
+			max-width: 100%;
 			height: auto;
 		}
 		
 
-	}// the-content
+	}// entry-content
 		
 }//article
 
@@ -483,7 +562,8 @@ article {
 
 /* Comments */
 #respond,
-#comments {
+#comments,
+#author-box {
 	margin-bottom: @margin;
 	width: 100%;
 	background: @post-bg;
@@ -501,6 +581,56 @@ article {
 		font-size: (@title-text-size + 0.5em);
 	}
 }
+.gravatar {
+	float: left;
+	padding-right: 1em;
+	margin-bottom: 1em;
+	
+	img {
+		width: 3em;
+		height: auto;
+	}
+}
+.post-extra-content {
+	margin-left: 4em;
+}
+.post-extra-meta {
+	font-size: @smaller-text;
+	margin-bottom: 0.5em;
+	padding-bottom: 0.5em;
+	border-bottom: 1px solid @off-white;
+}
+.post-extra-footer {
+	border-top: 1px solid @off-white;
+	.author-social {		
+		.connect {
+			float: left;
+			line-height: 3em;
+			margin-right: 0.5em;
+		}
+		a {
+			span {				
+				font-size: 3em;
+				line-height: 1em;
+				float: left;
+				display: block;
+				margin-right: 0.25em;
+			}
+		}
+	}
+	.post-tax-list {
+		padding: 1em 0 0;
+		width: 100%;
+		span.entypo {
+			font-size: 3em;
+			line-height: 0.5em;
+			margin-right: 0.1em;
+		}
+		a {
+			font-weight: normal;
+		}
+	}
+}
 .commentlist {
 	list-style: none;
 	margin: @margin 0 0 0;
@@ -508,7 +638,16 @@ article {
 	background: @off-white;
 	.rounded-corners;
 	
-	.comment {
+	li {
+		margin: 0;
+		padding: 0;
+	
+		ul {
+			list-style: none;
+		}
+	}
+	
+	article {
 		margin: 0;
 		width: 100%;
 		background: @white;
@@ -519,24 +658,12 @@ article {
 		.children {
 			margin-top: @margin;
 		}
+				
+		.reply {
+			font-size: @smaller-text;
+		}
 	}//comment
-	
-	.comment-author {
-		float: left;
-		margin-right: 10px;
 		
-		img {
-			position: absolute;
-			left: -50px;
-			top: 5px;
-		}
-		
-		.says {
-			display: none;
-		}
-		
-	}// comment-author
-	
 }//commentlist
 
 

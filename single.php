@@ -19,8 +19,10 @@ get_header(); ?>
 						</header><!-- .entry-header -->
 						<div class="entry-content">
 							<?php the_content(); ?>
+							<?php eyespeak_post_meta(); ?>
 						</div><!-- .entry-content -->	
 					</article><!-- #post-<?php the_ID(); ?> -->	
+					<?php eyespeak_author_box(); ?>
 					<?php comments_template( '', true ); ?>
 				<?php endwhile; // end of the loop. ?>
 			</div><!-- #content -->

@@ -55,7 +55,7 @@
 		<div id="page" class="hfeed">
 			<div id="header" class="clearfix">
 				<div class="col-full">
-					<div id="menu-button"><img src="<?php echo get_bloginfo('stylesheet_directory') ?>/images/menu.png" alt="menu"></div>
+					<div id="menu-button"><span class="entypo">&#9776;</span></div>
 					<div id="logo" class="clearfix">
 						<?php if (is_front_page()) { echo "<h1>"; } else { echo "<h2>"; }?>
 							<a href="<?php echo get_bloginfo('url') ?>">

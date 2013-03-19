@@ -5,8 +5,8 @@
  */
 
 /* enqueue */
-wp_enqueue_script('jquery');
 function my_scripts_method() {
+	wp_enqueue_script('jquery');
 	wp_enqueue_script('eyespeak', get_bloginfo('stylesheet_directory').'/js/eyespeak.js', 'jquery');
 }    
 add_action('wp_enqueue_scripts', 'my_scripts_method');
@@ -240,3 +240,141 @@ function cpt_icons() {
         }
     </style>
 <?php }*/ ?>
+<?php
+//
+//  profile subtractions/additions
+//
+ 
+function add_twitter_contactmethod( $contactmethods ) {
+  unset($contactmethods['aim']);
+  unset($contactmethods['jabber']);
+  unset($contactmethods['yim']);
+  unset($contactmethods['admin_color']);
+  return $contactmethods;
+}
+add_filter('user_contactmethods','add_twitter_contactmethod',10,1);
+
+add_action( 'show_user_profile', 'show_extra_profile_fields', 10 );
+add_action( 'edit_user_profile', 'show_extra_profile_fields', 10 );
+ 
+function show_extra_profile_fields( $user ) { ?>
+	<table class="form-table">
+		<tr>
+			<th><label for="twitter"><?php _e('Twitter', 'frontendprofile'); ?></label></th>
+			<td>
+				<input type="text" name="twitter" id="title" value="<?php echo esc_attr( get_the_author_meta( 'twitter', $user->ID ) ); ?>" class="regular-text" /><br />
+				<span class="description"><?php _e('include full URL to profile', 'frontendprofile'); ?></span>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="facebook"><?php _e('Facebook', 'frontendprofile'); ?></label></th>
+			<td>
+				<input type="text" name="facebook" id="title" value="<?php echo esc_attr( get_the_author_meta( 'facebook', $user->ID ) ); ?>" class="regular-text" /><br />
+				<span class="description"><?php _e('include full URL to profile', 'frontendprofile'); ?></span>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="linkedin"><?php _e('LinkedIn', 'frontendprofile'); ?></label></th>
+			<td>
+				<input type="text" name="linkedin" id="title" value="<?php echo esc_attr( get_the_author_meta( 'linkedin', $user->ID ) ); ?>" class="regular-text" /><br />
+				<span class="description"><?php _e('include full URL to profile', 'frontendprofile'); ?></span>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="pinterest"><?php _e('Pinterest', 'frontendprofile'); ?></label></th>
+			<td>
+				<input type="text" name="pinterest" id="title" value="<?php echo esc_attr( get_the_author_meta( 'pinterest', $user->ID ) ); ?>" class="regular-text" /><br />
+				<span class="description"><?php _e('include full URL to profile', 'frontendprofile'); ?></span>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="instagram"><?php _e('Instagram', 'frontendprofile'); ?></label></th>
+			<td>
+				<input type="text" name="instagram" id="title" value="<?php echo esc_attr( get_the_author_meta( 'instagram', $user->ID ) ); ?>" class="regular-text" /><br />
+				<span class="description"><?php _e('include full URL to profile', 'frontendprofile'); ?></span>
+			</td>
+		</tr>
+	</table>
+<?php }
+
+
+	
+add_action( 'personal_options_update', 'save_extra_profile_fields' );
+add_action( 'edit_user_profile_update', 'save_extra_profile_fields' );
+ 
+function save_extra_profile_fields( $user_id ) {
+ 
+	if ( !current_user_can( 'edit_user', $user_id ) )
+		return false;
+ 
+	update_user_meta( $user_id, 'twitter', $_POST['twitter'] );
+	update_user_meta( $user_id, 'facebook', $_POST['facebook'] );
+	update_user_meta( $user_id, 'linkedin', $_POST['linkedin'] );
+	update_user_meta( $user_id, 'pinterest', $_POST['pinterest'] );
+	update_user_meta( $user_id, 'instagram', $_POST['instagram'] );
+}
+
+function eyespeak_author_box() { ?>
+	<div id="author-box" class="clearfix">
+		<div class="gravatar">
+			<?php echo get_avatar( get_the_author_meta('ID'), 80 ); ?>
+		</div><!-- .gravatar -->
+		<div class="post-extra-content">
+			<div class="clearfix">
+				<?php if (!is_author()) { ?>
+					<a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>">
+				<?php } ?>
+						<?php echo get_the_author_meta('display_name'); ?>
+				<?php if (!is_author()) { ?>
+					</a>
+				<?php } ?>
+			</div>
+			<div class="clearfix">
+				<?php echo get_the_author_meta('description'); ?>
+			</div>
+			<?php if (get_the_author_meta('twitter') || get_the_author_meta('facebook') || get_the_author_meta('linkedin') || get_the_author_meta('pinterest') || get_the_author_meta('instagram') || get_the_author_meta('user_url')) { ?>
+				<div class="post-extra-footer">
+					<div class="author-social">
+						<span class="connect">Connect with <?php echo get_the_author_meta('first_name'); ?>:</span>
+						<?php if (get_the_author_meta('twitter')) { ?>
+							<a target="_blank" href="<?php echo get_the_author_meta('twitter'); ?>"><span class="entypo-social twitter">&#62217;</span></a>
+						<?php } ?>
+						<?php if (get_the_author_meta('facebook')) { ?>
+							<a target="_blank" href="<?php echo get_the_author_meta('facebook'); ?>"><span class="entypo-social facebook">&#62220;</span></a>
+						<?php } ?>
+						<?php if (get_the_author_meta('linkedin')) { ?>
+							<a target="_blank" href="<?php echo get_the_author_meta('linkedin'); ?>"><span class="entypo-social linkedin">&#62232;</span></a>
+						<?php } ?>
+						<?php if (get_the_author_meta('pinterest')) { ?>
+							<a target="_blank" href="<?php echo get_the_author_meta('pinterest'); ?>"><span class="entypo-social pinterest">&#62226;</span></a>
+						<?php } ?>
+						<?php if (get_the_author_meta('instagram')) { ?>
+							<a target="_blank" href="<?php echo get_the_author_meta('instagram'); ?>"><span class="entypo-social instagram">&#62253;</span></a>
+						<?php } ?>
+						<?php if (get_the_author_meta('user_url')) { ?>
+							<a target="_blank" href="<?php echo get_the_author_meta('user_url'); ?>"><span class="entypo website">&#127758;</span></a>
+						<?php } ?>
+					</div>
+				</div>
+			<?php } // end if checking for author meta ?>
+		</div><!-- .post-extra-content -->
+	</div><!-- #author-box -->
+<?php }
+
+function eyespeak_post_meta() { ?>
+	<div class="post-extra-footer">
+		<div class="post-tax-list clearfix">
+			<span class="entypo">&#128196;</span>Categories:&nbsp;
+			<?php 
+				$variable = wp_list_categories( 'style=none&echo=0' );
+				$variable = str_replace('<br />', '&nbsp;&nbsp;|&nbsp;&nbsp;', $variable);
+				echo $variable; ?>
+		</div>
+		<div class="post-tax-list clearfix">
+			<?php the_tags('<span class="entypo">&#59148;</span>Tags:&nbsp;', '&nbsp;&nbsp;|&nbsp;&nbsp;', ''); ?>
+		</div>
+	</div>
+
+<?php }
+
+?>
