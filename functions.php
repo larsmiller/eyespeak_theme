@@ -162,7 +162,7 @@ $linking = get_permalink();
   $excerpt = explode(' ', get_the_excerpt(), $limit);
   if (count($excerpt)>=$limit) {
     array_pop($excerpt);
-    $excerpt = implode(" ",$excerpt).'...<br><a href="'.$linking.'">Continue Reading...</a>';
+    $excerpt = implode(" ",$excerpt).'...<br><a href="'.$linking.'">...</a>';
   } else {
     $excerpt = implode(" ",$excerpt);
   }	
@@ -370,9 +370,11 @@ function eyespeak_post_meta() { ?>
 				$variable = str_replace('<br />', '&nbsp;&nbsp;|&nbsp;&nbsp;', $variable);
 				echo $variable; ?>
 		</div>
-		<div class="post-tax-list clearfix">
-			<?php the_tags('<span class="entypo">&#59148;</span>Tags:&nbsp;', '&nbsp;&nbsp;|&nbsp;&nbsp;', ''); ?>
-		</div>
+		<?php if (has_tag()) { ?>
+			<div class="post-tax-list clearfix">
+				<?php the_tags('<span class="entypo">&#59148;</span>Tags:&nbsp;', '&nbsp;&nbsp;|&nbsp;&nbsp;', ''); ?>
+			</div>
+		<?php } ?>
 	</div>
 
 <?php }

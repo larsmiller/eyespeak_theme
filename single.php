@@ -14,7 +14,7 @@ get_header(); ?>
 						<header class="entry-header">
 							<h1 class="entry-title"><?php the_title(); ?></h1>
 							<div class="entry-meta">
-								<p>Posted on <?php echo get_the_date('D, M j, Y @ h:ia'); ?></p>
+								<p>Posted on <?php echo get_the_date('D, M j, Y @ h:ia'); ?> by <a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php echo get_the_author_meta('display_name'); ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<?php comments_number( 'No Comments', 'One Comment', '% Comments' ); ?></p>
 							</div><!-- .entry-meta -->
 						</header><!-- .entry-header -->
 						<div class="entry-content">

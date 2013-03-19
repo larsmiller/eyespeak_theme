@@ -14,18 +14,18 @@
 				</a>
 			</h2>
 			<div class="entry-meta">
-				<p>Posted on <?php echo get_the_date('D, M j, Y @ h:ia'); ?></p>
+				<p>Posted on <?php echo get_the_date('D, M j, Y @ h:ia'); ?> by <a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php echo get_the_author_meta('display_name'); ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<?php comments_number( 'No Comments', 'One Comment', '% Comments' ); ?></p>
 			</div><!-- .entry-meta -->
 		</header><!-- .entry-header -->
 		<div class="entry-summary">
-			<?php 
-				$excerpt = excerpt(35);
-				echo strip_tags($excerpt);
-			?>
+			<p>
+				<?php 
+					$excerpt = excerpt(50);
+					echo strip_tags($excerpt);
+				?>
+			</p>
+			<?php eyespeak_post_meta(); ?>
 		</div><!-- .entry-summary -->
-		<p class="comment-number">
-			<?php comments_number( 'Comments (0)', 'Comments (1)', 'Comments (%)' ); ?>
-		</p>
 	</article><!-- #post-<?php the_ID(); ?> -->
 <?php endwhile; ?>
 <?php /* Display navigation to next/previous pages when applicable */ ?>
