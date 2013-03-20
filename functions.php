@@ -162,7 +162,7 @@ $linking = get_permalink();
   $excerpt = explode(' ', get_the_excerpt(), $limit);
   if (count($excerpt)>=$limit) {
     array_pop($excerpt);
-    $excerpt = implode(" ",$excerpt).'...<br><a href="'.$linking.'">...</a>';
+    $excerpt = implode(" ",$excerpt).'<br><br><a href="'.$linking.'">continue reading...</a>';
   } else {
     $excerpt = implode(" ",$excerpt);
   }	
@@ -364,19 +364,31 @@ function eyespeak_author_box() { ?>
 function eyespeak_post_meta() { ?>
 	<div class="post-extra-footer">
 		<div class="post-tax-list clearfix">
-			<span class="entypo">&#128196;</span>Categories:&nbsp;
 			<?php 
-				$variable = wp_list_categories( 'style=none&echo=0' );
-				$variable = str_replace('<br />', '&nbsp;&nbsp;|&nbsp;&nbsp;', $variable);
-				echo $variable; ?>
+				$cats = get_the_category_list( __( ' ', 'eyespeak' ) );
+				echo $cats;
+			?>
 		</div>
-		<?php if (has_tag()) { ?>
-			<div class="post-tax-list clearfix">
-				<?php the_tags('<span class="entypo">&#59148;</span>Tags:&nbsp;', '&nbsp;&nbsp;|&nbsp;&nbsp;', ''); ?>
-			</div>
-		<?php } ?>
 	</div>
 
 <?php }
 
+function eyespeak_posted_on() { ?>
+	<p>
+		<?php echo get_the_date('D, M j, Y @ h:ia'); ?> by 
+		<a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>">
+			<?php echo get_the_author_meta('display_name'); ?>
+		</a>
+		<?php
+			if ( comments_open() ) :
+				echo '&nbsp;&nbsp;|&nbsp;&nbsp;<a href="';
+				echo comments_link();
+				echo '">';
+				comments_popup_link( 'No comments yet', '1 comment', '% comments', 'comments-link', 'Comments are off for this post');
+				echo '</a>';
+			endif;
+		?>
+	</p>
+
+<?php }
 ?>

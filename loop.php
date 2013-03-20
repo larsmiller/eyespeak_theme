@@ -14,16 +14,21 @@
 				</a>
 			</h2>
 			<div class="entry-meta">
-				<p>Posted on <?php echo get_the_date('D, M j, Y @ h:ia'); ?> by <a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php echo get_the_author_meta('display_name'); ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<?php comments_number( 'No Comments', 'One Comment', '% Comments' ); ?></p>
+				<?php eyespeak_posted_on(); ?>
 			</div><!-- .entry-meta -->
+			<?php
+				if ( has_post_thumbnail() )
+					the_post_thumbnail('large');
+			?>
 		</header><!-- .entry-header -->
-		<div class="entry-summary">
-			<p>
-				<?php 
-					$excerpt = excerpt(50);
-					echo strip_tags($excerpt);
-				?>
-			</p>
+		<div class="entry-content">
+			<?php 
+			//	display custom excerpt length
+			//	echo "<p>";
+			//	echo excerpt(30);
+			//	echo "</p>";
+			?>
+			<?php the_content(); ?>
 			<?php eyespeak_post_meta(); ?>
 		</div><!-- .entry-summary -->
 	</article><!-- #post-<?php the_ID(); ?> -->

@@ -77,6 +77,7 @@ function eyespeak_comment( $comment, $args, $depth ) {
 endif; // ends check for eyespeak_comment()
 
 ?>
+<?php if ( have_comments() ) : ?>
 
 	<div id="comments">
 	<?php if ( post_password_required() ) : ?>
@@ -136,3 +137,5 @@ endif; // ends check for eyespeak_comment()
 	<?php endif; ?>
 
 </div><!-- #comments -->
+
+<?php endif; // end if have comments ?>
